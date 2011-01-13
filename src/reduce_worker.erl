@@ -53,7 +53,7 @@ collect_reduce_data_loop(CollectedResultsDict) ->
             
             NewCollectedResults = 
                 lists:foldl(fun({Key, Value}, Dict) ->
-                                    dict:append_list(Key, Value, Dict)
+                                    dict:append_list(Key, [Value], Dict)
                             end, 
                             CollectedResultsDict, ReduceData),
             
@@ -66,7 +66,7 @@ collect_reduce_data_loop(CollectedResultsDict) ->
         {MasterPid, start_reducing} ->
             error_logger:info_msg("Collected reduce data; received start "
                                       "signal from master (~p).",
-                                      [MasterPid]),
+                                  [MasterPid]),
             
             {MasterPid, dict:to_list(CollectedResultsDict)}
     end.
